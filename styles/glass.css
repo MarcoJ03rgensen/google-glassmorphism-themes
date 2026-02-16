@@ -49,7 +49,7 @@ html[data-theme="neon"] {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  z-index: -2;
   background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
   overflow: hidden;
   pointer-events: none;
@@ -95,6 +95,83 @@ html[data-theme="neon"] {
   100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
 }
 
+/* BELUGA ANIMATIONS */
+/* Wrapper: Handles horizontal movement and the flip (scaleX) */
+.beluga-wrapper {
+    position: fixed;
+    top: 20%; /* Adjusted for background visibility */
+    left: -450px;
+    width: 380px;
+    height: auto;
+    z-index: -1; /* Behind search results, in front of background */
+    animation: swimCycle 55s linear infinite;
+    filter: drop-shadow(0 25px 45px rgba(0,0,0,0.6));
+    pointer-events: none;
+}
+
+@keyframes swimCycle {
+    /* Lap 1: Left to Right. Flipped (scaleX -1) to face right. */
+    0% { left: -450px; transform: scaleX(-1); opacity: 0; }
+    2% { opacity: 1; }
+    45% { left: 110vw; transform: scaleX(-1); opacity: 1; }
+    47% { left: 110vw; opacity: 0; }
+    
+    /* Flip and prepare for Lap 2 */
+    50% { left: 110vw; transform: scaleX(1); opacity: 0; }
+    52% { opacity: 1; }
+    
+    /* Lap 2: Right to Left. Normal scale (scaleX 1) to face left. */
+    95% { left: -450px; transform: scaleX(1); opacity: 1; }
+    97% { left: -450px; opacity: 0; }
+    100% { left: -450px; transform: scaleX(-1); opacity: 0; }
+}
+
+/* Inner Mover: Handles vertical bobbing and tilting */
+.beluga-mover {
+    animation: organicSwimMotion 12s ease-in-out infinite;
+}
+
+@keyframes organicSwimMotion {
+    0%, 100% { transform: translateY(-50px) rotate(-8deg); }
+    50% { transform: translateY(50px) rotate(8deg); }
+}
+
+.beluga-svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+/* Body Undulation */
+.body-path {
+    animation: bodyUndulate 3s ease-in-out infinite;
+}
+
+@keyframes bodyUndulate {
+    0%, 100% { d: path("M130,280 C130,190 230,165 350,175 C480,185 620,260 740,345 C770,365 780,405 745,430 C700,460 550,445 420,415 C280,395 180,390 130,330 C110,310 110,295 130,280 Z"); }
+    50% { d: path("M130,285 C130,195 230,170 350,180 C480,190 620,270 735,355 C765,375 775,415 740,440 C695,470 545,455 415,425 C275,405 175,400 130,340 C110,320 110,300 130,285 Z"); }
+}
+
+.tail-section {
+    transform-origin: 745px 390px;
+    animation: tailSwing 3s ease-in-out infinite;
+}
+
+@keyframes tailSwing {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    50% { transform: rotate(-10deg) translateY(5px); }
+}
+
+.pectoral-fin {
+    transform-origin: 310px 410px;
+    animation: finWaver 5s ease-in-out infinite;
+}
+
+@keyframes finWaver {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(12deg); }
+}
+
 /* GOOGLE UI OVERRIDES */
 body, .appbar, #hdtb, #hdtbSum {
   background: transparent !important;
@@ -102,7 +179,18 @@ body, .appbar, #hdtb, #hdtbSum {
 }
 
 /* Make main containers glass */
-#searchform, #rcnt, .g, .MjjYud, .yuRUbf, .gWMDob, .kp-blk, .c-container {
+/* Robust selectors for search results and panels */
+#searchform, 
+#rcnt, 
+.g, 
+.MjjYud, 
+div[data-hveid], 
+div[jscontroller], 
+.yuRUbf, 
+.gWMDob, 
+.kp-blk, 
+.c-container, 
+[role="main"] > div {
   background: var(--glass-panel) !important;
   backdrop-filter: blur(var(--blur));
   -webkit-backdrop-filter: blur(var(--blur));
@@ -114,15 +202,23 @@ body, .appbar, #hdtb, #hdtbSum {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Exclude common layout containers from glass effect to avoid double-glass */
+#center_col, #res, #search {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
 /* Hover effects for search results */
-.g:hover, .MjjYud:hover {
+.g:hover, .MjjYud:hover, div[data-hveid]:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(0,0,0,0.2) !important;
   border-color: var(--accent) !important;
 }
 
 /* Search Input Bar */
-.RNNXgb, .emcav {
+.RNNXgb, .emcav, form[role="search"] {
   background: rgba(255, 255, 255, 0.15) !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   backdrop-filter: blur(10px);
@@ -141,7 +237,7 @@ a, cite, .BreadpT {
 }
 
 /* Secondary text */
-.VwiC3b, .s, .st, .f, .kt {
+.VwiC3b, .s, .st, .f, .kt, span {
   color: var(--text-muted) !important;
 }
 
@@ -151,8 +247,8 @@ a, cite, .BreadpT {
 }
 
 /* Logo filtering */
-/* Invert logo for dark themes (Ocean/Neon) */
 html:not([data-theme="apple"]) .lnXdpd, 
-html:not([data-theme="apple"]) .jfN4p {
+html:not([data-theme="apple"]) .jfN4p,
+html:not([data-theme="apple"]) img[alt="Google"] {
   filter: invert(1) hue-rotate(180deg) brightness(2);
 }
