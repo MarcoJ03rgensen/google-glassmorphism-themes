@@ -1,14 +1,16 @@
-/* RADICAL GLASS OS THEME */
+/* RADICAL GLASS OS THEME - V2 REFINEMENT */
 
 :root {
-  --glass-surface: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-highlight: rgba(255, 255, 255, 0.2);
+  --glass-surface: rgba(20, 20, 30, 0.4); /* Darker, more transparent */
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.1);
   --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --accent-glow: 0 0 20px rgba(56, 189, 248, 0.3);
+  --text-secondary: rgba(255, 255, 255, 0.75);
+  --accent-glow: 0 0 15px rgba(56, 189, 248, 0.2);
   --neon-blue: #38bdf8;
   --font-display: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --radius-lg: 24px;
+  --radius-sm: 12px;
 }
 
 /* GLOBAL RESET & BASICS */
@@ -16,189 +18,282 @@ body {
   background: transparent !important;
   color: var(--text-primary) !important;
   font-family: var(--font-display) !important;
+  overflow-x: hidden;
 }
 
 /* HIDE CLUTTER */
-/* Hide Google Logo (we'll replace or just keep it clean), footer, and random links */
-.lnXdpd, .k1zIA, .o3j99, #fbar, .site-footer, .pico-footer {
+.lnXdpd, .k1zIA, .o3j99, #fbar, .site-footer, .pico-footer, .sfbg, .sfbgg {
   display: none !important;
 }
 
-/* FULLSCREEN BACKGROUND (The Whale) */
+/* FULLSCREEN BACKGROUND */
 #glass-extension-bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -10;
+  z-index: -9999;
   background: radial-gradient(circle at 50% 20%, #1a2c4e 0%, #02040a 100%);
   overflow: hidden;
+  pointer-events: none;
 }
 
-/* MAIN LAYOUT TRANSFORM */
-/* Center the main content column and detach it from the top */
+/* === LAYOUT & Z-INDEX FIXES === */
 #main {
   margin-top: 80px !important;
+  position: relative;
+  z-index: 10;
 }
 
 #rcnt {
   margin-top: 20px;
   display: grid;
-  grid-template-columns: 1fr; /* Stack results for now, maybe grid later */
+  grid-template-columns: 1fr;
   gap: 20px;
-  max-width: 900px !important; /* Wider canvas */
+  max-width: 900px !important;
   margin: 0 auto;
+  position: relative;
+  z-index: 10;
 }
 
 #center_col {
   margin: 0 auto !important;
   width: 100% !important;
   max-width: 800px !important;
+  border: none !important; /* Ensure no borders on container */
 }
 
-/* SEARCH BAR - FLOATING CAPSULE */
-/* This is the top search bar container */
+/* Prevent double-glass on nested containers */
+.mw, .rfjfwb, #cnt, #sfcnt, .appbar, #res, #search, .kp-blk {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* === SEARCH BAR === */
 .RNNXgb, .emcav, form[role="search"] {
-  background: rgba(0, 0, 0, 0.3) !important;
+  background: rgba(0, 0, 0, 0.25) !important;
   border: 1px solid var(--glass-border) !important;
   border-radius: 50px !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4), var(--accent-glow) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3), var(--accent-glow) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px);
   margin-top: 20px;
-  transition: all 0.3s ease;
-  max-width: 700px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 720px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .RNNXgb:hover, .emcav:hover, form[role="search"]:hover {
-  background: rgba(0, 0, 0, 0.5) !important;
+  background: rgba(0, 0, 0, 0.4) !important;
   border-color: var(--neon-blue) !important;
-  transform: scale(1.02);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 25px rgba(56, 189, 248, 0.25) !important;
+  transform: translateY(-2px);
 }
 
-/* Input text */
 input.gLFyf, textarea.gLFyf {
   color: white !important;
   font-size: 18px !important;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  caret-color: var(--neon-blue);
 }
 
-/* SEARCH RESULTS - GLASS CARDS */
-/* Target the result containers */
-.g, .MjjYud, div[data-hveid] {
-  background: var(--glass-surface) !important;
-  border: 1px solid var(--glass-border) !important;
-  border-radius: 24px !important;
-  padding: 24px !important;
-  margin-bottom: 24px !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s;
-  
-  /* Reset internal styling */
+/* Icons in search bar (mic, lens) */
+.goxjub, .F9J60b, .QCzoEc, .M8H8pb {
+  fill: var(--text-secondary) !important;
   color: var(--text-secondary) !important;
 }
 
-/* Hover Effect for Cards */
-.g:hover, .MjjYud:hover, div[data-hveid]:hover {
-  transform: translateY(-5px) scale(1.01);
-  background: rgba(255, 255, 255, 0.12) !important;
-  border-color: var(--neon-blue) !important;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.1) !important;
-  z-index: 10;
+/* === TOP BAR BUTTONS & USER MENU === */
+/* Main Header container */
+#searchform {
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
-/* TYPOGRAPHY */
-/* Result Titles */
-h3, .LC20lb {
-  font-size: 22px !important;
-  font-weight: 600 !important;
-  color: var(--neon-blue) !important;
-  margin-bottom: 8px !important;
-  letter-spacing: 0.5px;
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+/* Top Right Buttons (Apps, Profile, Labs) */
+.gb_A, .gb_d, .gb_Fa, .gb_Ea, a.gb_d, a.gb_A {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 50% !important; /* Circle buttons */
+    backdrop-filter: blur(10px) !important;
+    transition: all 0.2s ease;
+    color: white !important;
 }
 
-/* Links */
-a {
-  text-decoration: none !important;
+.gb_A:hover, .gb_d:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: scale(1.1);
+    border-color: var(--neon-blue) !important;
 }
 
-/* URL / Breadcrumbs */
-cite, .TbwUpd {
-  color: rgba(255, 255, 255, 0.5) !important;
-  font-size: 13px !important;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+/* "Sign In" button specifically */
+.gb_ja {
+    background: rgba(56, 189, 248, 0.15) !important;
+    border: 1px solid var(--neon-blue) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(10px);
+    color: var(--neon-blue) !important;
+    font-weight: 600 !important;
+    padding: 8px 20px !important;
 }
 
-/* Descriptions */
-.VwiC3b, .s, .st {
-  color: rgba(255, 255, 255, 0.8) !important;
-  font-size: 15px !important;
-  line-height: 1.6 !important;
-}
-
-/* SIDEBAR / KNOWLEDGE GRAPH */
-/* Make it float on the right */
-#rhs {
-  margin-left: 30px !important;
-}
-
-.kp-blk, .c-container {
-  background: rgba(0, 0, 0, 0.4) !important;
-  border: 1px solid var(--glass-border) !important;
-  border-radius: 24px !important;
-  backdrop-filter: blur(20px) !important;
-}
-
-/* NAVIGATION BAR (All, Images, News...) */
-/* Turn it into a floating pill menu */
+/* === NAVIGATION TABS (All, Images, News) === */
 #hdtb, #hdtbSum {
   background: transparent !important;
   border-bottom: none !important;
+  padding-bottom: 10px;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center; /* Center the tabs */
 }
 
 .hdtb-mitem {
-  display: inline-block;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
   color: rgba(255, 255, 255, 0.6) !important;
-  font-weight: 500;
-  padding: 8px 16px !important;
+  font-weight: 600;
+  padding: 8px 20px !important;
+  margin: 0 6px;
   border-radius: 20px;
+  border: 1px solid transparent;
   transition: all 0.2s;
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 1px;
+  background: rgba(0,0,0,0.2); /* Slight background for unselected */
 }
 
-.hdtb-mitem.hdtb-msel, .hdtb-mitem:hover {
-  background: rgba(255, 255, 255, 0.15);
+/* Selected Tab */
+.hdtb-mitem.hdtb-msel, .hdtb-mitem[aria-current="page"] {
+  background: rgba(56, 189, 248, 0.15) !important;
   color: white !important;
-  border-bottom: none !important; /* Remove Google's default underline */
+  border: 1px solid var(--neon-blue) !important;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
 }
 
-/* REMOVE WHITE BOXES */
-/* Google sometimes wraps things in white divs. Force transparency. */
-.mw, .rfjfwb, #cnt, #sfcnt, .appbar {
-  background: transparent !important;
+.hdtb-mitem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white !important;
+  transform: translateY(-2px);
 }
 
-/* SCROLLBAR */
+/* "Tools" Button */
+.t2vtad, #hdtb-tls {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    padding: 6px 16px !important;
+    color: var(--text-secondary) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* === SEARCH RESULT CARDS === */
+/* The main result container */
+.g, .MjjYud, div[data-hveid], .isv-r, .g-blk {
+  background: var(--glass-surface) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 24px !important;
+  margin-bottom: 24px !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s;
+  position: relative;
+  z-index: 1; /* Reset stacking context */
+}
+
+/* Remove internal borders/shadows from Google's own sub-cards */
+.g .g, .MjjYud .MjjYud {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    backdrop-filter: none !important;
+}
+
+/* Hover Effect */
+.g:hover, .MjjYud:hover, div[data-hveid]:hover {
+  transform: translateY(-4px) scale(1.005);
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(56, 189, 248, 0.4) !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), var(--accent-glow) !important;
+  z-index: 5;
+}
+
+/* Result Typography */
+h3, .LC20lb {
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  color: var(--neon-blue) !important;
+  margin-bottom: 6px !important;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.15);
+}
+
+/* Featured Snippet (Answer Box) styling */
+.xpdopen, .ifM9O {
+    background: rgba(56, 189, 248, 0.05) !important;
+    border-left: 3px solid var(--neon-blue) !important;
+    border-radius: var(--radius-sm) !important;
+}
+
+/* Link URL */
+cite, .TbwUpd {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 12px !important;
+  font-family: monospace !important; /* Tech feel */
+}
+
+/* Description text */
+.VwiC3b, .s, .st {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+/* "People also ask" accordion */
+.related-question-pair {
+    border-bottom: 1px solid var(--glass-border) !important;
+}
+.related-question-pair:last-child {
+    border-bottom: none !important;
+}
+
+/* Pagination (Gooooogle) */
+#botstuff {
+    background: transparent !important;
+}
+/* Style the Next/Prev buttons */
+a#pnnext, a#pnprev {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 50px !important;
+    padding: 10px 24px !important;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s;
+}
+a#pnnext:hover, a#pnprev:hover {
+    background: rgba(56, 189, 248, 0.15) !important;
+    border-color: var(--neon-blue) !important;
+    transform: translateX(5px);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.1);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(255,255,255,0.2);
-  border-radius: 5px;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.4);
+  background: var(--neon-blue);
 }
