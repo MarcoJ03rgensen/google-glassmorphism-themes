@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Tab</title>
+    <link rel="stylesheet" href="styles/glass.css">
+    <style>
+        /* Specific overrides for New Tab page */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        /* Center the search bar perfectly */
+        form[role="search"] {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 0 !important; /* Override CSS margin */
+        }
+        
+        /* Hide unnecessary Google elements if we copied them */
+        .lnXdpd, #prm, #footer { display: none; }
+
+        /* Fake "Most Visited" tiles (optional, or just keep it clean) */
+        #most-visited {
+            margin-top: 40px;
+            display: flex;
+            gap: 16px;
+        }
+        .tile {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+        }
+        .tile:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- We will inject the background via content.js, but let's add a placeholder -->
+    <div id="glass-extension-bg"></div>
+
+    <!-- Simple Search Form mimicking Google -->
+    <form action="https://www.google.com/search" method="get" role="search">
+        <div class="RNNXgb" style="display:flex; align-items:center; padding:0 20px; height:50px;">
+            <input name="q" class="gLFyf" type="text" autocomplete="off" 
+                   placeholder="Search Google or type a URL" 
+                   style="flex:1; background:transparent; border:none; outline:none; color:white; font-size:16px;">
+        </div>
+    </form>
+
+    <!-- Optional Shortcuts -->
+    <div id="most-visited">
+        <a href="https://youtube.com" class="tile" title="YouTube">YT</a>
+        <a href="https://github.com" class="tile" title="GitHub">GH</a>
+        <a href="https://google.com" class="tile" title="Google">G</a>
+        <a href="https://reddit.com" class="tile" title="Reddit">R</a>
+    </div>
+
+    <script src="scripts/content.js"></script>
+</body>
+</html>
