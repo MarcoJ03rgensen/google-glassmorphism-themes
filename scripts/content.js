@@ -1,10 +1,23 @@
 // Initialize theme
 (async function init() {
-  const { theme = "ocean" } = await chrome.storage.sync.get(["theme"]);
-  document.documentElement.setAttribute("data-theme", theme);
-  
-  injectBackground();
-  startBubbles();
+  try {
+    const { theme = "ocean" } = await chrome.storage.sync.get(["theme"]);
+    // Apply theme attribute immediately to avoid FOUC (Flash of Unstyled Content)
+    document.documentElement.setAttribute("data-theme", theme);
+    
+    // Inject background once the DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        injectBackground();
+        startBubbles();
+      });
+    } else {
+      injectBackground();
+      startBubbles();
+    }
+  } catch (e) {
+    console.error("Glass Extension Error:", e);
+  }
 })();
 
 // Listen for theme changes
@@ -15,6 +28,9 @@ chrome.storage.onChanged.addListener((changes, area) => {
 });
 
 function injectBackground() {
+  // Prevent duplicate injection
+  if (document.getElementById("glass-extension-bg")) return;
+
   const bg = document.createElement("div");
   bg.id = "glass-extension-bg";
   
@@ -116,6 +132,7 @@ function injectBackground() {
 function startBubbles() {
   const container = document.getElementById("bubble-container");
   if (!container) {
+    // Retry if DOM wasn't ready
     setTimeout(startBubbles, 500);
     return;
   }
