@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Google Glassmorphism Themes",
+  "version": "1.0",
+  "description": "Transforms Google Search with glassmorphism UI and ambient animations.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "*://*.google.com/*",
+    "*://*.google.dk/*",
+    "*://*.google.co.uk/*",
+    "*://*.google.de/*",
+    "*://*.google.jp/*",
+    "*://*.google.ca/*",
+    "*://*.google.fr/*",
+    "*://*.google.it/*",
+    "*://*.google.es/*",
+    "*://*.google.nl/*",
+    "*://*.google.se/*",
+    "*://*.google.no/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.google.com/*",
+        "*://*.google.dk/*",
+        "*://*.google.co.uk/*",
+        "*://*.google.de/*",
+        "*://*.google.jp/*",
+        "*://*.google.ca/*",
+        "*://*.google.fr/*",
+        "*://*.google.it/*",
+        "*://*.google.es/*",
+        "*://*.google.nl/*",
+        "*://*.google.se/*",
+        "*://*.google.no/*"
+      ],
+      "css": ["styles/glass.css"],
+      "js": ["scripts/content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Customize Theme"
+  }
+}
