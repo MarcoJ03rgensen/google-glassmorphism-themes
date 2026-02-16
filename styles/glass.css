@@ -1,254 +1,204 @@
-/* GLASSMORPHISM & ANIMATION THEMES */
+/* RADICAL GLASS OS THEME */
 
 :root {
-  /* Default Ocean Theme */
-  --bg-top: #004d7a;
-  --bg-bottom: #001f3f;
-  --glass-panel: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --text-main: #e2e8f0;
-  --text-muted: #94a3b8;
-  --accent: #38bdf8;
-  --radius: 16px;
-  --blur: 16px;
-  --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --glass-surface: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.2);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --accent-glow: 0 0 20px rgba(56, 189, 248, 0.3);
+  --neon-blue: #38bdf8;
+  --font-display: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Apple Frost Theme */
-html[data-theme="apple"] {
-  --bg-top: #f5f5f7;
-  --bg-bottom: #e0e0e2;
-  --glass-panel: rgba(255, 255, 255, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --text-main: #1d1d1f;
-  --text-muted: #86868b;
-  --accent: #0071e3;
-  --radius: 18px;
-  --blur: 20px;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+/* GLOBAL RESET & BASICS */
+body {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-display) !important;
 }
 
-/* Neon Night Theme */
-html[data-theme="neon"] {
-  --bg-top: #0f0c29;
-  --bg-bottom: #302b63;
-  --glass-panel: rgba(20, 10, 40, 0.6);
-  --glass-border: rgba(139, 92, 246, 0.3);
-  --text-main: #fff;
-  --text-muted: #c4b5fd;
-  --accent: #a78bfa;
-  --radius: 12px;
-  --blur: 12px;
-  --shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+/* HIDE CLUTTER */
+/* Hide Google Logo (we'll replace or just keep it clean), footer, and random links */
+.lnXdpd, .k1zIA, .o3j99, #fbar, .site-footer, .pico-footer {
+  display: none !important;
 }
 
-/* BACKGROUND LAYERS */
+/* FULLSCREEN BACKGROUND (The Whale) */
 #glass-extension-bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -2;
-  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  z-index: -10;
+  background: radial-gradient(circle at 50% 20%, #1a2c4e 0%, #02040a 100%);
   overflow: hidden;
-  pointer-events: none;
 }
 
-.light-rays {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    60deg,
-    rgba(255, 255, 255, 0.05) 0px,
-    rgba(255, 255, 255, 0.05) 40px,
-    transparent 40px,
-    transparent 120px
-  );
-  filter: blur(25px);
-  opacity: 0.5;
-  animation: raysMove 20s infinite linear;
+/* MAIN LAYOUT TRANSFORM */
+/* Center the main content column and detach it from the top */
+#main {
+  margin-top: 80px !important;
 }
 
-@keyframes raysMove {
-  from { transform: translateX(-15%) skewX(-5deg); }
-  to { transform: translateX(15%) skewX(5deg); }
+#rcnt {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr; /* Stack results for now, maybe grid later */
+  gap: 20px;
+  max-width: 900px !important; /* Wider canvas */
+  margin: 0 auto;
 }
 
-.bubble {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: rise var(--d) linear infinite;
-  bottom: -50px; 
+#center_col {
+  margin: 0 auto !important;
+  width: 100% !important;
+  max-width: 800px !important;
 }
 
-@keyframes rise {
-  0% { transform: translateY(0) scale(0); opacity: 0; }
-  10% { opacity: 0.4; }
-  90% { opacity: 0.4; }
-  100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
-}
-
-/* BELUGA ANIMATIONS */
-/* Wrapper: Handles horizontal movement and the flip (scaleX) */
-.beluga-wrapper {
-    position: fixed;
-    top: 20%; /* Adjusted for background visibility */
-    left: -450px;
-    width: 380px;
-    height: auto;
-    z-index: -1; /* Behind search results, in front of background */
-    animation: swimCycle 55s linear infinite;
-    filter: drop-shadow(0 25px 45px rgba(0,0,0,0.6));
-    pointer-events: none;
-}
-
-@keyframes swimCycle {
-    /* Lap 1: Left to Right. Flipped (scaleX -1) to face right. */
-    0% { left: -450px; transform: scaleX(-1); opacity: 0; }
-    2% { opacity: 1; }
-    45% { left: 110vw; transform: scaleX(-1); opacity: 1; }
-    47% { left: 110vw; opacity: 0; }
-    
-    /* Flip and prepare for Lap 2 */
-    50% { left: 110vw; transform: scaleX(1); opacity: 0; }
-    52% { opacity: 1; }
-    
-    /* Lap 2: Right to Left. Normal scale (scaleX 1) to face left. */
-    95% { left: -450px; transform: scaleX(1); opacity: 1; }
-    97% { left: -450px; opacity: 0; }
-    100% { left: -450px; transform: scaleX(-1); opacity: 0; }
-}
-
-/* Inner Mover: Handles vertical bobbing and tilting */
-.beluga-mover {
-    animation: organicSwimMotion 12s ease-in-out infinite;
-}
-
-@keyframes organicSwimMotion {
-    0%, 100% { transform: translateY(-50px) rotate(-8deg); }
-    50% { transform: translateY(50px) rotate(8deg); }
-}
-
-.beluga-svg {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-}
-
-/* Body Undulation */
-.body-path {
-    animation: bodyUndulate 3s ease-in-out infinite;
-}
-
-@keyframes bodyUndulate {
-    0%, 100% { d: path("M130,280 C130,190 230,165 350,175 C480,185 620,260 740,345 C770,365 780,405 745,430 C700,460 550,445 420,415 C280,395 180,390 130,330 C110,310 110,295 130,280 Z"); }
-    50% { d: path("M130,285 C130,195 230,170 350,180 C480,190 620,270 735,355 C765,375 775,415 740,440 C695,470 545,455 415,425 C275,405 175,400 130,340 C110,320 110,300 130,285 Z"); }
-}
-
-.tail-section {
-    transform-origin: 745px 390px;
-    animation: tailSwing 3s ease-in-out infinite;
-}
-
-@keyframes tailSwing {
-    0%, 100% { transform: rotate(0deg) translateY(0); }
-    50% { transform: rotate(-10deg) translateY(5px); }
-}
-
-.pectoral-fin {
-    transform-origin: 310px 410px;
-    animation: finWaver 5s ease-in-out infinite;
-}
-
-@keyframes finWaver {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(12deg); }
-}
-
-/* GOOGLE UI OVERRIDES */
-body, .appbar, #hdtb, #hdtbSum {
-  background: transparent !important;
-  color: var(--text-main) !important;
-}
-
-/* Make main containers glass */
-/* Robust selectors for search results and panels */
-#searchform, 
-#rcnt, 
-.g, 
-.MjjYud, 
-div[data-hveid], 
-div[jscontroller], 
-.yuRUbf, 
-.gWMDob, 
-.kp-blk, 
-.c-container, 
-[role="main"] > div {
-  background: var(--glass-panel) !important;
-  backdrop-filter: blur(var(--blur));
-  -webkit-backdrop-filter: blur(var(--blur));
-  border: 1px solid var(--glass-border) !important;
-  border-radius: var(--radius) !important;
-  box-shadow: var(--shadow) !important;
-  margin-bottom: 16px;
-  padding: 16px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Exclude common layout containers from glass effect to avoid double-glass */
-#center_col, #res, #search {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-}
-
-/* Hover effects for search results */
-.g:hover, .MjjYud:hover, div[data-hveid]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.2) !important;
-  border-color: var(--accent) !important;
-}
-
-/* Search Input Bar */
+/* SEARCH BAR - FLOATING CAPSULE */
+/* This is the top search bar container */
 .RNNXgb, .emcav, form[role="search"] {
-  background: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
-  border-radius: 24px !important;
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 50px !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4), var(--accent-glow) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px);
+  margin-top: 20px;
+  transition: all 0.3s ease;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-textarea, input {
-  color: var(--text-main) !important;
+.RNNXgb:hover, .emcav:hover, form[role="search"]:hover {
+  background: rgba(0, 0, 0, 0.5) !important;
+  border-color: var(--neon-blue) !important;
+  transform: scale(1.02);
+}
+
+/* Input text */
+input.gLFyf, textarea.gLFyf {
+  color: white !important;
+  font-size: 18px !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* SEARCH RESULTS - GLASS CARDS */
+/* Target the result containers */
+.g, .MjjYud, div[data-hveid] {
+  background: var(--glass-surface) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 24px !important;
+  padding: 24px !important;
+  margin-bottom: 24px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s;
+  
+  /* Reset internal styling */
+  color: var(--text-secondary) !important;
+}
+
+/* Hover Effect for Cards */
+.g:hover, .MjjYud:hover, div[data-hveid]:hover {
+  transform: translateY(-5px) scale(1.01);
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: var(--neon-blue) !important;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.1) !important;
+  z-index: 10;
+}
+
+/* TYPOGRAPHY */
+/* Result Titles */
+h3, .LC20lb {
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  color: var(--neon-blue) !important;
+  margin-bottom: 8px !important;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
 }
 
 /* Links */
-a, cite, .BreadpT {
-  color: var(--accent) !important;
-  text-decoration: none;
+a {
+  text-decoration: none !important;
 }
 
-/* Secondary text */
-.VwiC3b, .s, .st, .f, .kt, span {
-  color: var(--text-muted) !important;
+/* URL / Breadcrumbs */
+cite, .TbwUpd {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 13px !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-/* Hide annoying white backgrounds */
-.mw, .rfjfwb, .hdtb-mitem.hdtb-msel, #cnt, #sfcnt {
+/* Descriptions */
+.VwiC3b, .s, .st {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+/* SIDEBAR / KNOWLEDGE GRAPH */
+/* Make it float on the right */
+#rhs {
+  margin-left: 30px !important;
+}
+
+.kp-blk, .c-container {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+/* NAVIGATION BAR (All, Images, News...) */
+/* Turn it into a floating pill menu */
+#hdtb, #hdtbSum {
+  background: transparent !important;
+  border-bottom: none !important;
+  margin-bottom: 20px;
+}
+
+.hdtb-mitem {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-weight: 500;
+  padding: 8px 16px !important;
+  border-radius: 20px;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.hdtb-mitem.hdtb-msel, .hdtb-mitem:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white !important;
+  border-bottom: none !important; /* Remove Google's default underline */
+}
+
+/* REMOVE WHITE BOXES */
+/* Google sometimes wraps things in white divs. Force transparency. */
+.mw, .rfjfwb, #cnt, #sfcnt, .appbar {
   background: transparent !important;
 }
 
-/* Logo filtering */
-html:not([data-theme="apple"]) .lnXdpd, 
-html:not([data-theme="apple"]) .jfN4p,
-html:not([data-theme="apple"]) img[alt="Google"] {
-  filter: invert(1) hue-rotate(180deg) brightness(2);
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.1);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.4);
 }
